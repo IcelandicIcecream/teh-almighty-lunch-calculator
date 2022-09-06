@@ -22,8 +22,10 @@ export default function AddItem(props) {
             resetField(`person${props.number}`)
         })
         }>
-        <input type="number" step="0.01" placeholder="Insert food price" {...register(`person${props.number}`, {required: true}) }/>
-        <button className="px-2 py-1 m-2 bg-gray-100 rounded-md cursor-pointer" type="submit">Add</button>
+        <span className="flex flex-row align-items">
+            <input className="p-2 rounded-md h-3/5" type="number" step="0.01" placeholder="Insert food price" {...register(`person${props.number}`, {required: true}) }/>
+            <button className="px-3 py-1 mx-2 bg-gray-100 rounded-md cursor-pointer" type="submit">Add</button>
+        </span>
         </form>
     )
 }

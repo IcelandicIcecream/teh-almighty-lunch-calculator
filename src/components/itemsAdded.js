@@ -9,8 +9,8 @@ export default function ItemsAdded(props) {
     const {removeFromBasket} = useItems()
 
     return (
-        <div className="flex flex-row justify-between">
-        <p>{props.number}</p>
+        <div className="flex flex-row justify-between p-3">
+        <p class>RM {props.number}</p>
         <button onClick={() => removeFromBasket(props.uuid)}>x</button>
         </div>
     )

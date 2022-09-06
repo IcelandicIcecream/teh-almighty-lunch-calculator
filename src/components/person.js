@@ -8,7 +8,7 @@ import { useItems } from "../utils/ItemContext";
 
 export default function Person({number}) {
 
-    const {totalBasket} = useItems()
+    const {totalBasket, gst, servTax, delFee, discount, pax} = useItems()
     const currentBasket = totalBasket.filter(array => array.person === `person${number}`)
     const [currBasketTotal, setCurrBasketTotal] = useState()
 
@@ -19,22 +19,23 @@ export default function Person({number}) {
         })
 
         setCurrBasketTotal(total.reduce((a,b) => a+b, 0))
+        setCurrBasketTotal(prevTotal => Math.round((((prevTotal*(1+gst+servTax))) + (delFee/pax - discount/pax))*1000)/1000)
 
-    },[currentBasket])
+    },[currentBasket, gst, servTax, delFee, discount, pax])
 
     const itemsElem = currentBasket.map(data => {
-        return(
+        return( 
             <ItemsAdded key={data.id} uuid={data.id} number={data.amount}/>
         )
     })
 
     return(
-        <div className="p-4 m-3">
-            <p><strong>Person #{number}</strong></p>
+        <div className="p-4 m-3 rounded-lg shadow-md bg-gray-50 min-w-min">
+            <p className="mb-4 text-md"><strong>Person #{number}</strong></p>
             <AddItem number={number}/>
             {itemsElem}
             <div>
-                <p className="my-4"><strong>Total: {currBasketTotal} </strong></p>               
+                <p className="my-4"><strong>Total: RM {currBasketTotal} </strong></p>               
             </div>
         </div>
     )
