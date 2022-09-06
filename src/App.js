@@ -16,9 +16,9 @@ function App() {
       <SetFees/>
       <div className="flex flex-row items-center justify-center p-2 space-x-6">
         <p>No. of pax:</p>
-        <button className="px-3 py-1 text-xl rounded-lg shadow-sm bg-gray-50 hover:bg-gray-100" onClick={() => changeCount(1)}>+</button>
-        <p>{pax}</p>
         {pax > 0 && <button className="px-3 py-1 text-xl rounded-lg shadow-sm bg-gray-50 hover:bg-gray-100" onClick={() => changeCount(-1)}>-</button>}
+        <p>{pax}</p>
+        <button className="px-3 py-1 text-xl rounded-lg shadow-sm bg-gray-50 hover:bg-gray-100" onClick={() => changeCount(1)}>+</button>
       </div>
       <div className="grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3">
       {personElem}
