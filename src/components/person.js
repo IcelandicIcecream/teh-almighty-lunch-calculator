@@ -8,8 +8,8 @@ import { useItems } from "../utils/ItemContext";
 
 export default function Person({number}) {
 
-    const {totalBasket, gst, servTax, delFee, discount, pax} = useItems()
-    const currentBasket = totalBasket.filter(array => array.person === `person${number}`)
+    const {discount, delFee, servTax, gst, pax, getCurrentBasket, SumBasket, AutoRound} = useItems()
+    const currentBasket = getCurrentBasket(number)
     const [currBasketTotal, setCurrBasketTotal] = useState()
 
     useEffect(() => {
@@ -17,11 +17,13 @@ export default function Person({number}) {
         currentBasket.map(data => {
             return total.push(parseFloat(data.amount))
         })
+        
+        const number = SumBasket(total)
+        const amount = (((number*(1+gst+servTax))) + (delFee/pax - discount/pax)) 
 
-        setCurrBasketTotal(total.reduce((a,b) => a+b, 0))
-        setCurrBasketTotal(prevTotal => Math.round((((prevTotal*(1+gst+servTax))) + (delFee/pax - discount/pax))*1000)/1000)
+        setCurrBasketTotal(AutoRound(amount,2,true))
 
-    },[currentBasket, gst, servTax, delFee, discount, pax])
+    },[AutoRound, SumBasket, currentBasket, discount, delFee, pax, gst, servTax])
 
     const itemsElem = currentBasket.map(data => {
         return( 

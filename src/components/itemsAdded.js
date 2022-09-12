@@ -10,7 +10,7 @@ export default function ItemsAdded(props) {
 
     return (
         <div className="flex flex-row justify-between p-3">
-        <p class>RM {props.number}</p>
+        <p>RM {props.number}</p>
         <button onClick={() => removeFromBasket(props.uuid)}>x</button>
         </div>
     )

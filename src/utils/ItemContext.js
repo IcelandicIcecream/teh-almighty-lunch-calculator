@@ -17,41 +17,57 @@ export const ItemProvider = ({children}) => {
     const [delFee, setDelFee] = useState(0)
     const [totalBasket, setBasket] = useState([])
     const [sum, setSum] = useState(0)
+    const [round, setRound] = useState(0)
     const [pax, setPax] = useState(0)
     const [servTax, setServTax] = useState(0)
     const [gst, setGst] = useState(0)
 
-    function AutoRound(number, decimalPoint) {
+    function AutoRound(number, decimalPoint, bypass) {
         let finalAmount
         let rounding
- 
+
         if (isNaN(decimalPoint) === true) {
-         decimalPoint = 2
+            decimalPoint = 2   
         }
- 
+
         const dec = 10**(decimalPoint)
-        const lastDigit = + (number.toFixed(decimalPoint).slice(-1))
- 
-        if (lastDigit >= 5 && lastDigit <= 6) {
-         rounding = (lastDigit - 5)/dec
-         finalAmount = Math.round((number - rounding)*dec)/dec 
-        } else if (lastDigit >= 0 && lastDigit <= 2) { 
-         rounding = lastDigit/dec
-         finalAmount = Math.round((number - rounding)*dec)/dec 
-        } else if (lastDigit >= 3 && lastDigit <= 4) {
-         rounding = (5 - lastDigit)/dec
-         finalAmount = Math.round((number + rounding)*dec)/dec 
+
+        if (bypass === true) {
+            
+            return Math.round(number*(dec*10))/(dec*10)
+        
         } else {
-         rounding = (10 - lastDigit)/dec
-         finalAmount = Math.round((number + rounding)*dec)/dec 
-        }
+            
+            const lastDigit = + (number.toFixed(decimalPoint).slice(-1))
+            
+            if (lastDigit >= 5 && lastDigit <= 6) {
+                rounding = -((lastDigit - 5)/dec)
+                finalAmount = Math.round((number + rounding)*dec)/dec 
+            } else if (lastDigit >= 0 && lastDigit <= 2) { 
+                rounding = -(lastDigit/dec)
+                finalAmount = Math.round((number + rounding)*dec)/dec 
+            } else if (lastDigit >= 3 && lastDigit <= 4) {
+                rounding = (5 - lastDigit)/dec
+                finalAmount = Math.round((number + rounding)*dec)/dec 
+            } else {
+                rounding = (10 - lastDigit)/dec
+                finalAmount = Math.round((number + rounding)*dec)/dec 
+            }
+             
+            return [finalAmount, rounding]
+                
+            }
  
-        return finalAmount
+        
      }
 
     function SumBasket(basket) {
         const sum = basket.reduce((a, b) => a + b, 0)
         return sum
+    }
+
+    function getCurrentBasket(number) { 
+        return totalBasket.filter(array => array.person === `person${number}`)
     }
 
     //renews the sum of the values in the totalBasket array as the basket changes by pushing each element into another array
@@ -66,9 +82,10 @@ export const ItemProvider = ({children}) => {
     setDelFee(getDel)
     const number = SumBasket(total)
     const amount = (((number*(1+gst+servTax))) + (delFee - discount)) 
-    setSum(AutoRound(amount,2))
+    setSum(AutoRound(amount,2)[0])
+    setRound(AutoRound(amount,2)[1])
 
-    }, [totalBasket, gst, servTax, discount, delFee, sum]) //the dependency is set, so that re-renders happens only after changes in the totalBasket 
+    }, [round,totalBasket, gst, servTax, discount, delFee, sum]) //the dependency is set, so that re-renders happens only after changes in the totalBasket 
 
     const getDisc = (value) => {
         return value
@@ -127,5 +144,7 @@ export const ItemProvider = ({children}) => {
         changeCount,
         AutoRound,
         SumBasket,
+        getCurrentBasket,
+        round,
     }}>{children}</ItemContext.Provider>
 }
