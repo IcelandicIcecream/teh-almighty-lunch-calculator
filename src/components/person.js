@@ -18,17 +18,14 @@ export default function Person({number}) {
     
 
     useEffect(() => {
-        console.log(Object.values(names))
         let latestNameIndex = names[Object.keys(names)[Object.keys(names).length-1]]
         if (latestNameIndex === undefined) {
             return undefined
         }
-        if (latestNameIndex.personNumber !== number) {
-            return undefined
-        } else {
+        if (latestNameIndex.personNumber === number) {
             setDisplayName(latestNameIndex.name)
         } 
-    }, [names, number])
+    }, [names])
 
     useEffect(() => {
         let total = [];
