@@ -21,6 +21,39 @@ export const ItemProvider = ({children}) => {
     const [servTax, setServTax] = useState(0)
     const [gst, setGst] = useState(0)
 
+    function AutoRound(number, decimalPoint) {
+        let finalAmount
+        let rounding
+ 
+        if (isNaN(decimalPoint) === true) {
+         decimalPoint = 2
+        }
+ 
+        const dec = 10**(decimalPoint)
+        const lastDigit = + (number.toFixed(decimalPoint).slice(-1))
+ 
+        if (lastDigit >= 5 && lastDigit <= 6) {
+         rounding = (lastDigit - 5)/dec
+         finalAmount = Math.round((number - rounding)*dec)/dec 
+        } else if (lastDigit >= 0 && lastDigit <= 2) { 
+         rounding = lastDigit/dec
+         finalAmount = Math.round((number - rounding)*dec)/dec 
+        } else if (lastDigit >= 3 && lastDigit <= 4) {
+         rounding = (5 - lastDigit)/dec
+         finalAmount = Math.round((number + rounding)*dec)/dec 
+        } else {
+         rounding = (10 - lastDigit)/dec
+         finalAmount = Math.round((number + rounding)*dec)/dec 
+        }
+ 
+        return finalAmount
+     }
+
+    function SumBasket(basket) {
+        const sum = basket.reduce((a, b) => a + b, 0)
+        return sum
+    }
+
     //renews the sum of the values in the totalBasket array as the basket changes by pushing each element into another array
     //named total
     useEffect(() => {
@@ -31,12 +64,11 @@ export const ItemProvider = ({children}) => {
 
     setDiscount(getDisc)
     setDelFee(getDel)
+    const number = SumBasket(total)
+    const amount = (((number*(1+gst+servTax))) + (delFee - discount)) 
+    setSum(AutoRound(amount,2))
 
-    //and then using the reduce function on the array to sum everything up, include tax & minus discounts   
-    setSum(total.reduce((a, b) => a + b, 0))
-    setSum(prevSum => Math.round((((prevSum*(1+gst+servTax))) + (delFee - discount))*1000)/1000)
-
-    }, [totalBasket, gst, servTax, discount, delFee]) //the dependency is set, so that re-renders happens only after changes in the totalBasket 
+    }, [totalBasket, gst, servTax, discount, delFee, sum]) //the dependency is set, so that re-renders happens only after changes in the totalBasket 
 
     const getDisc = (value) => {
         return value
@@ -93,5 +125,7 @@ export const ItemProvider = ({children}) => {
         toggleGST,
         pax,
         changeCount,
+        AutoRound,
+        SumBasket,
     }}>{children}</ItemContext.Provider>
 }
