@@ -6,14 +6,13 @@ import SetFees from "./components/extraFees";
 function App() {
   
   const {sum, pax, changeCount, round} = useItems()
-
   const personElem = Array(pax).fill(0).map((_,i) => <Person key={i+1} number={i+1}/>)
 
   return (
     <div className="flex flex-col items-center justify-center">
       <p className="py-2 m-4 text-3xl">Split The Bill ⚡</p>
       <h1 className="text-xl font-semibold ">Total: RM {sum}</h1>
-      <p className="pb-2 text-sm"> Rounding:<span className={`${round > 0 ? "text-green-500" : "text-red-500"} px-2`}>{round}</span></p>
+      <p className="pb-2 text-sm">Rounding: {round}</p>
       <SetFees/>
       <div className="flex flex-row items-center justify-center p-2 space-x-6">
         <p>No. of pax:</p>

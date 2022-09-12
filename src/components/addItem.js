@@ -17,14 +17,17 @@ export default function AddItem(props) {
         <form onSubmit={handleSubmit(data => {
             addToBasket({
             person: `person${props.number}`,
-            amount: data[Object.keys(data)],
+            amount: Object.values(data)[1],
+            food: Object.values(data)[0],
             })
             resetField(`person${props.number}`)
+            resetField(`food${props.number}`)
         })
         }>
-        <span className="flex flex-row align-items">
-            <input className="p-2 rounded-md h-3/5" type="number" step="0.01" placeholder="Insert food price" {...register(`person${props.number}`, {required: true}) }/>
-            <button className="px-3 py-1 mx-2 bg-gray-100 rounded-md cursor-pointer" type="submit">Add</button>
+        <span className="flex flex-row justify-center max-w-lg gap-1 p-2 text-sm align-items">
+            <input className="w-1/2 p-2" type="text" placeholder="Food" {...register(`food${props.number}`, {required: true}) }/>
+            <input className="w-1/3 p-2" type="number" step="0.01" placeholder="Price" {...register(`person${props.number}`, {required: true}) }/>
+            <button className="px-3 py-1 mx-2 text-xl bg-gray-100 rounded-full cursor-pointer" type="submit">+</button>
         </span>
         </form>
     )

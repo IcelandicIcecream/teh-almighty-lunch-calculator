@@ -14,6 +14,7 @@ export const ItemProvider = ({children}) => {
 
     //setting the main variables of the calculator 
     const [discount, setDiscount] = useState(0)
+    const [names, setNames] = useState([])
     const [delFee, setDelFee] = useState(0)
     const [totalBasket, setBasket] = useState([])
     const [sum, setSum] = useState(0)
@@ -27,7 +28,7 @@ export const ItemProvider = ({children}) => {
         let rounding
 
         if (isNaN(decimalPoint) === true) {
-            decimalPoint = 2   
+            decimalPoint = 2
         }
 
         const dec = 10**(decimalPoint)
@@ -70,6 +71,14 @@ export const ItemProvider = ({children}) => {
         return totalBasket.filter(array => array.person === `person${number}`)
     }
 
+    const getDisc = (value) => {
+        return value
+    }
+
+    const getDel = (value) => {
+        return value
+    }
+
     //renews the sum of the values in the totalBasket array as the basket changes by pushing each element into another array
     //named total
     useEffect(() => {
@@ -82,18 +91,10 @@ export const ItemProvider = ({children}) => {
     setDelFee(getDel)
     const number = SumBasket(total)
     const amount = (((number*(1+gst+servTax))) + (delFee - discount)) 
-    setSum(AutoRound(amount,2)[0])
-    setRound(AutoRound(amount,2)[1])
+    setSum(AutoRound(amount,2,false)[0])
+    setRound(AutoRound(amount,2,false)[1])
 
     }, [round,totalBasket, gst, servTax, discount, delFee, sum]) //the dependency is set, so that re-renders happens only after changes in the totalBasket 
-
-    const getDisc = (value) => {
-        return value
-    }
-
-    const getDel = (value) => {
-        return value
-    }
 
     //Creates a function to change the total Pax, accepts an expression to be called to deduct or increment the Pax
     function changeCount(expression) {
@@ -106,9 +107,9 @@ export const ItemProvider = ({children}) => {
     }
 
     //Adds an item to the totalBasket, this function is called when a value is submitted
-    function addToBasket({person, amount}) {
+    function addToBasket({person, amount, food}) {
         setBasket(prevBasket => {
-            return [...prevBasket, {id: uuidV4(), person, amount}]
+            return [...prevBasket, {id: uuidV4(), person, amount, food}]
         })
     }
     
@@ -116,6 +117,12 @@ export const ItemProvider = ({children}) => {
     function removeFromBasket(id) {
         setBasket(prevBasket => {
             return prevBasket.filter(item => item.id !== id)
+        })
+    }
+
+    function addName({name, personNumber}) {
+        setNames(prevNames => {
+            return [...prevNames, {name, personNumber}]
         })
     }
 
@@ -146,5 +153,7 @@ export const ItemProvider = ({children}) => {
         SumBasket,
         getCurrentBasket,
         round,
+        names,
+        addName,
     }}>{children}</ItemContext.Provider>
 }
