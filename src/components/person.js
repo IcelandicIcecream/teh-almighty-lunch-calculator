@@ -40,14 +40,14 @@ export default function Person({number}) {
 
     },[AutoRound, SumBasket, currentBasket, discount, delFee, pax, gst, servTax])
 
-    const itemsElem = currentBasket.map(data => {
+    const itemsElem = currentBasket.map((data,index) => {
         return( 
-            <ItemsAdded key={data.id} uuid={data.id} food={data.food} number={data.amount}/>
+            <ItemsAdded count={index+1} key={data.id} uuid={data.id} food={data.food} number={data.amount}/>
         )
     })
 
     return(
-        <div className="relative flex flex-col items-start justify-between p-4 m-3 rounded-lg shadow-md bg-gray-50 min-w-min">
+        <div className="relative flex flex-col items-start justify-start p-4 m-3 rounded-lg shadow-md bg-gray-50 min-w-min">
             <div className="relative flex flex-row items-center justify-between w-auto">
             <p className="p-2 text-[0.95rem]"><strong>{displayName}</strong></p>
             <svg className="absolute z-50 cursor-pointer -right-6" onClick={() => showNameBox(prevState => !prevState)}xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" preserveAspectRatio="xMidYMid meet" viewBox="0 0 24 24"><path fill="currentColor" d="m18.988 2.012l3 3L19.701 7.3l-3-3zM8 16h3l7.287-7.287l-3-3L8 13z"/><path fill="currentColor" d="M19 19H8.158c-.026 0-.053.01-.079.01c-.033 0-.066-.009-.1-.01H5V5h6.847l2-2H5c-1.103 0-2 .896-2 2v14c0 1.104.897 2 2 2h14a2 2 0 0 0 2-2v-8.668l-2 2V19z"/></svg>
@@ -66,8 +66,10 @@ export default function Person({number}) {
             <input className="w-1/2 p-2" type="text" placeholder="Enter name" {...register(`personName${number}`) }/>
             </form>
             <AddItem number={number}/>
+            <div className="w-full mb-8">
             {itemsElem}
-            <div>
+            </div>
+            <div className="absolute bottom-2">
                 <p className="p-2 text-sm"><strong>Total: RM {currBasketTotal} </strong></p>               
             </div>
         </div>

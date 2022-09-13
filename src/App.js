@@ -20,7 +20,7 @@ function App() {
         <p>{pax}</p>
         <button className="px-3 py-1 text-xl rounded-lg shadow-sm bg-gray-50 hover:bg-gray-100" onClick={() => changeCount(1)}>+</button>
       </div>
-      <div className="grid xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 md:grid-cols-3">
+      <div className="grid mx-6 xs:grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 md:grid-cols-3">
       {personElem}
       </div>
     </div>

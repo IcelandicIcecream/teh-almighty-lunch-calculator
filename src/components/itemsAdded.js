@@ -7,10 +7,9 @@ import { useItems } from "../utils/ItemContext";
 export default function ItemsAdded(props) {
     
     const {removeFromBasket} = useItems()
-
     return (
-        <div className="flex flex-row items-center justify-between w-full p-4 text-sm">
-        <p>{props.food} (RM {props.number}) </p>
+        <div className="flex flex-row items-center justify-between w-full px-4 py-1 text-sm">
+        <p>{props.count}. <span className="font-semibold">{props.food}</span> (RM {props.number}) </p>
         <button className="p-2 px-3 bg-gray-100 text-md" onClick={() => removeFromBasket(props.uuid)}>x</button>
         </div>
     )
