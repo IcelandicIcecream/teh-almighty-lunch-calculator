@@ -6,7 +6,7 @@
     html,
     body,
     #__next {
-    @apply flex flex-col w-screen min-h-screen p-0 m-0 overflow-x-hidden overflow-y-auto font-inter ;
+    @apply flex flex-col w-screen h-full min-h-screen p-0 m-0 overflow-x-hidden font-inter bg-slate-100/30;
     }
 }
 

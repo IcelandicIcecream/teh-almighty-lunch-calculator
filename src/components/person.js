@@ -36,7 +36,7 @@ export default function Person({number}) {
         const number = SumBasket(total)
         const amount = (((number*(1+gst+servTax))) + (delFee/pax - discount/pax)) 
 
-        setCurrBasketTotal(AutoRound(amount,2,true))
+        setCurrBasketTotal(AutoRound(amount,1,true))
 
     },[AutoRound, SumBasket, currentBasket, discount, delFee, pax, gst, servTax])
 

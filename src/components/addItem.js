@@ -24,7 +24,7 @@ export default function AddItem(props) {
             resetField(`food${props.number}`)
         })
         }>
-        <span className="flex flex-row justify-center max-w-lg gap-1 p-2 text-sm align-items">
+        <span className="flex flex-row justify-center max-w-lg gap-1 p-2 text-md align-items">
             <input className="w-1/2 p-2" type="text" placeholder="Food" {...register(`food${props.number}`, {required: true}) }/>
             <input className="w-1/3 p-2" type="number" step="0.01" placeholder="Price" {...register(`person${props.number}`, {required: true}) }/>
             <button className="px-3 py-1 mx-2 text-xl bg-gray-100 rounded-full cursor-pointer" type="submit">+</button>
