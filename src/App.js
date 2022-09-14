@@ -12,7 +12,8 @@ function App() {
     <div className="flex flex-col items-center justify-center h-full lg:flex-row lg:items-start">
       <div className={`w-full h-full p-6 mb-3 shadow-md ${pax > 0 ? "lg:w-fit" : "lg:w-full"} min-w-min lg:min-h-screen`}>
       <div className="flex flex-col items-center justify-center px-3 lg:left-10 lg:sticky lg:top-6">
-        <p className="py-2 m-4 text-3xl font-bold">Split The Bill ⚡</p>
+        <p className="pt-2 mt-4 mb-1 text-3xl font-bold">Split The Bill ⚡</p>
+        <p className="pb-4 text-sm text-gray-600/70">by <a className="underline hover:text-gray-600 underline-offset-2" href="https://icelandicicecream.vercel.app" target="_blank" rel="noreferrer noopener">IcelandicIcecream</a></p>
         <div className="flex flex-col items-center justify-center px-6 py-2 rounded-md">
         <h1 className="text-3xl font-semibold text-gray-600">RM {sum}</h1>
         <p className={`pb-2 text-sm ${round > 0 ? "text-green-600" : "text-red-600"}`}>Rounding: {round}</p>
