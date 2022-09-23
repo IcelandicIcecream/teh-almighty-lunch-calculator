@@ -17,11 +17,11 @@ export default function SetFees() {
         <div className="flex flex-row py-2 space-x-6">
         <div className="flex flex-row items-center justify-center space-x-2.5">
             <input id="gst" className="flex-none w-5 h-5 lg:w-4 lg:h-4" type="checkbox" onClick={toggleGST(GST)} {...register("gst")}/>
-            <label htmlFor="gst">GST (6%)</label>
+            <label className="text-sm" htmlFor="gst">SST (6%)</label>
         </div>
         <div className="flex flex-row items-center justify-center space-x-3">
             <input id="servTax" className="flex-none w-5 h-5 lg:w-4 lg:h-4" type="checkbox" onClick={toggleServ(servTax)} {...register("servTax")}/>
-            <label htmlFor="servTax">Service Tax (10%)</label>
+            <label className="text-sm" htmlFor="servTax">Service Tax (10%)</label>
         </div>
         </div>
         <div className="flex flex-col">
